@@ -14,12 +14,12 @@
 
 To evaluate the performance and advantages of this distributed odometry framework, we conduct a series of experiments using both a public dataset, S3E and data collected by ourselves. 
 
-📄 Related paper is available on arxiv: [TSFDO](https://arxiv.org/abs/xxxx).
+<!--📄 Related paper is available on arxiv: [TSFDO](https://arxiv.org/abs/xxxx). -->
 
 ---
 
 ## 1. Custom dataset
-### 1.1 Platforms
+### 1.1 Sensor Configuration
 
 <p align="center">
   <img src="figures/figure2.png" alt="figure2" width="500"/>
@@ -37,7 +37,20 @@ To evaluate the performance and advantages of this distributed odometry framewor
 
 Four self-made UAVs and a ground mobile robot is utilized for data collection.
 
-### 1.2 Data collection
+| Device | Type | Details |
+|:--------:|:------:|:------:|
+| LiDAR(Sequence-UAV_1,2,3,4 & Hete1,2,3)  | Livox MID 360 |  Range:70m  FOV:360°*59°  Freq:10Hz  |
+| LiDAR(Sequence-GR_1,2,3)  | Velodyne VLP-16 | Range:100m FOV:360°*40° Freq:10Hz |
+| IMU(Sequence-UAV_1,2,3,4 & Hete1,2,3)  | Livox MID 360 built-in ICM40609       |      |
+| IMU (Sequence-GR_1,2,3) |                      |      |
+| UWB |        |      |
+| RTK  |                   |    |
+
+### 1.2 Sensor Synchronization
+
+### 1.3 Ground Truth
+
+### 1.4 Dataset Analysis
 
 <p align="center">
   <img src="figures/figure4.png" alt="figure4" width="600"/>
@@ -53,10 +66,12 @@ Specifically, the data obtained from three different trajectories, containing IM
 
 These sequences obtained by ground robot are employed to compare the performance of our method with existing cooperative odometry approaches in scenarios where robot trajectories within a multi-robot system do not intersect except for the start point. The choice of the ground robot is motivated by its LiDAR type, since the existing methods in comparison are compatible only with Velodyne LiDAR, whereas our UAVs are equipped with Livox Mid-360 LiDAR.
 
+### 1.5 Dataset Format
+
 This project provides partial experimental data (in ROS bag format) for obtaining the experimental results in the paper.  
 
 - [Rosbag](https://huggingface.co/datasets/WenZhong1024/USTC-AIS-Lab_TSFDO/tree/main)  
-- [Alternative link (Baidu Netdisk)](https://pan.baidu.com/s/xxxx) Extraction code: `****`  
+<!-- [Alternative link (Baidu Netdisk)](https://pan.baidu.com/s/xxxx) Extraction code: `****`  -->
 
 > ⚠️ Note: Please cite this paper when using the dataset and comply with the open-source license.
 
