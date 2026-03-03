@@ -39,17 +39,26 @@ Four self-made UAVs and a ground mobile robot is utilized for data collection.
 
 | Device | Type | Details |
 |:--------:|:------:|:------:|
-| LiDAR(Sequence-UAV_1,2,3,4 & Hete1,2,3)  | Livox MID 360 |  Range:70m  FOV:360°*59°  Freq:10Hz  |
+| LiDAR(Sequence-UAV_1,2,3,4)  | Livox MID 360 |  Range:70m FOV:360°*59° Freq:10Hz  |
 | LiDAR(Sequence-GR_1,2,3)  | Velodyne VLP-16 | Range:100m FOV:360°*40° Freq:10Hz |
-| IMU(Sequence-UAV_1,2,3,4 & Hete1,2,3)  | Livox MID 360 built-in ICM40609       |      |
-| IMU (Sequence-GR_1,2,3) |                      |      |
-| UWB |        |      |
-| RTK  |                   |    |
+| LiDAR(Sequence-Hete_1,2,3)  | Simulated MID360 |  Freq:10Hz  |
+| IMU(Sequence-UAV_1,2,3,4)  | Livox MID 360 built-in ICM40609 |   Freq:200Hz   |
+| IMU (Sequence-GR_1,2,3) | WHEELTEC N100 9-axis |    Freq:100Hz  |
+| IMU(Sequence-Hete_1,2,3)  |  GAZEBO imu_plugin   |   Freq:50Hz |
+| UWB |  Nooploop LinkTrack(Tag-Tag TWR) P-BS2 |  Range:200m Accuracy:±10cm Freq:50Hz  |
+| RTK  | Beitian BG-620 GNSS Receiver (RTK mode)|  Accuracy:±1.5cm Freq:1Hz  |
 
 ### 1.2 Sensor Synchronization
+#### 1.2.1 Time synchronization
+**Time synchronization across all sensors**： Time synchronization is not considered in this work due to the heterogeneity of the dataset and compatibility limitations among the evaluated algorithms.
 
+**Time synchronization across agents**: In outdoor settings with access to Global Navigation Satellite System (GNSS) signals, we use GNSS time as the global reference to synchronize the timing across agents after the collection.
+#### 1.2.2 Sensor calibration
+The LiDAR–IMU extrinsic parameters are treated as known constants. The lever-arm compensation of the UWB sensor is omitted, since ablation studies indicate that its influence on the overall estimation accuracy is negligible.
 ### 1.3 Ground Truth
+For outdoor environments with good GNSS signal reception, a dual-antenna RTK device(Beitian BG-620 GNSS Receiver) is used to achieve highly accurate localization data with centimeter-level precision.
 
+For simulated datasets, we obtain the ground truth from gazebo topic /gazebo/model_states.
 ### 1.4 Dataset Analysis
 
 <p align="center">
@@ -66,7 +75,30 @@ Specifically, the data obtained from three different trajectories, containing IM
 
 These sequences obtained by ground robot are employed to compare the performance of our method with existing cooperative odometry approaches in scenarios where robot trajectories within a multi-robot system do not intersect except for the start point. The choice of the ground robot is motivated by its LiDAR type, since the existing methods in comparison are compatible only with Velodyne LiDAR, whereas our UAVs are equipped with Livox Mid-360 LiDAR.
 
+| Sequence | Time[s] | Ground Truth | Length[m] | Size | Sensors|
+|:--------:|:------:|:------:|:------:|:------:|:------:|
+| Sequence-UAV_1  | 100 | RTK | uav0:109  uav1:109  uav4:109  uav5:96 | 1.1GB |IMU LiDAR UWB RTK|
+| Sequence-UAV_2  | 107 | RTK | uav0:103  uav1:107  uav4:94   uav5:75 | 1.3GB |IMU LiDAR UWB RTK|
+| Sequence-UAV_3  | 179 | RTK | uav0:109  uav1:106  uav4:115  uav5:177| 2.0GB |IMU LiDAR UWB RTK|
+| Sequence-UAV_4  | 126 | RTK | uav0:111  uav1:106  uav4:99   uav5:44 | 1.3GB |IMU LiDAR UWB RTK|
+| Sequence-GR_1   | 406 | RTK | Alpha:248 Bob:229 Carol:178 | 5.1GB |IMU LiDAR RTK|
+| Sequence-GR_2   | 436 | RTK | Alpha:226 Bob:199 Carol:240 | 5.3GB |IMU LiDAR RTK|
+| Sequence-GR_3   | 692 | RTK | Alpha:420 Bob:424 Carol:443 | 9.7GB |IMU LiDAR RTK|
+| Sequence-Hete_1 | 72  | /gazebo/model_states | iris_0:304 iris_1:252 iris_2:189 iris_3:230   | 522MB |simulated IMU LiDAR|
+| Sequence-Hete_2 | 79  | /gazebo/model_states | iris_0:394 iris_1:361 iris_2:188 iris_3:229   | 582MB |simulated IMU LiDAR|
+| Sequence-Hete_3 | 205 | /gazebo/model_states | iris_0:1616 iris_1:1174 iris_2:492 iris_3:500 | 1.5GB |simulated IMU LiDAR|
+
 ### 1.5 Dataset Format
+| Sensor | Topic | Type |
+|:--------:|:------:|:------:|
+| LiDAR(Sequence-UAV_1,2,3,4)  | Livox MID 360 |  Range:70m FOV:360°*59° Freq:10Hz  |
+| LiDAR(Sequence-GR_1,2,3)  | Velodyne VLP-16 | Range:100m FOV:360°*40° Freq:10Hz |
+| LiDAR(Sequence-Hete1,2,3)  | Simulated MID360 |  Freq:10Hz  |
+| IMU(Sequence-UAV_1,2,3,4)  | Livox MID 360 built-in ICM40609 |   Freq:200Hz   |
+| IMU (Sequence-GR_1,2,3) | WHEELTEC N100 9-axis |    Freq:100Hz  |
+| IMU(Sequence-Hete1,2,3)  |  GAZEBO imu_plugin   |   Freq:50Hz |
+| UWB |  Nooploop LinkTrack(Tag-Tag TWR) P-BS2 |  Range:200m Accuracy:±10cm Freq:50Hz  |
+| RTK  | Beitian BG-620 GNSS Receiver (RTK mode)|  Accuracy:±1.5cm Freq:1Hz  |
 
 This project provides partial experimental data (in ROS bag format) for obtaining the experimental results in the paper.  
 
