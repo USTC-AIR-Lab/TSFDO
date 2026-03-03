@@ -75,6 +75,7 @@ Specifically, the data obtained from three different trajectories, containing IM
 
 These sequences obtained by ground robot are employed to compare the performance of our method with existing cooperative odometry approaches in scenarios where robot trajectories within a multi-robot system do not intersect except for the start point. The choice of the ground robot is motivated by its LiDAR type, since the existing methods in comparison are compatible only with Velodyne LiDAR, whereas our UAVs are equipped with Livox Mid-360 LiDAR.
 
+**Analysis of our datasets**
 | Sequence | Time[s] | Ground Truth | Length[m] | Size | Sensors|
 |:--------:|:------:|:------:|:------:|:------:|:------:|
 | Sequence-UAV_1  | 100 | RTK | uav0:109  uav1:109  uav4:109  uav5:96 | 1.1GB |IMU LiDAR UWB RTK|
@@ -89,16 +90,23 @@ These sequences obtained by ground robot are employed to compare the performance
 | Sequence-Hete_3 | 205 | /gazebo/model_states | iris_0:1616 iris_1:1174 iris_2:492 iris_3:500 | 1.5GB |simulated IMU LiDAR|
 
 ### 1.5 Dataset Format
+
+**Information of ROS topics included in our datasets.** Agent_id stands for (uav0,uav1,uav4,uav5) or (Alpha,Bob,Carol) or (iris_0,iris_1,iris_2,iris_3).
 | Sensor | Topic | Type |
 |:--------:|:------:|:------:|
-| LiDAR(Sequence-UAV_1,2,3,4)  | Livox MID 360 |  Range:70m FOV:360°*59° Freq:10Hz  |
-| LiDAR(Sequence-GR_1,2,3)  | Velodyne VLP-16 | Range:100m FOV:360°*40° Freq:10Hz |
-| LiDAR(Sequence-Hete1,2,3)  | Simulated MID360 |  Freq:10Hz  |
-| IMU(Sequence-UAV_1,2,3,4)  | Livox MID 360 built-in ICM40609 |   Freq:200Hz   |
-| IMU (Sequence-GR_1,2,3) | WHEELTEC N100 9-axis |    Freq:100Hz  |
-| IMU(Sequence-Hete1,2,3)  |  GAZEBO imu_plugin   |   Freq:50Hz |
-| UWB |  Nooploop LinkTrack(Tag-Tag TWR) P-BS2 |  Range:200m Accuracy:±10cm Freq:50Hz  |
-| RTK  | Beitian BG-620 GNSS Receiver (RTK mode)|  Accuracy:±1.5cm Freq:1Hz  |
+| LiDAR(Sequence-UAV_1,2,3,4)  | /agent_id/livox/lidar |  livox_ros_driver2/CustomMsg  |
+| IMU(Sequence-UAV_1,2,3,4)    | /agent_id/livox/imu   |  sensor_msgs/Imu  |
+| UWB(Sequence-UAV_1,2,3,4)    | /agent_id/nink_linktrack_nodeframe2 |  nlink_parser/LinktrackNodeframe2  |
+| RTK(Sequence-UAV_1,2,3,4)    | /agent_id/global_position/raw/fix |  sensor_msgs/NavSatFix  |
+| LiDAR(Sequence-GR_1,2,3)     | /agent_id/velodyne_points | sensor_msgs/PointCloud2 |
+| IMU(Sequence-GR_1,2,3)       | /agent_id/imu/data |  sensor_msgs/Imu  |
+| RTK(Sequence-GR_1,2,3)       | /agent_id/fix |  sensor_msgs/NavSatFix  |
+| simulated UWB(Sequence-GR_1,2,3)       | /agent_id/nink_linktrack_nodeframe2 | std_msgs/Float32MultiArray  |
+| simulated UWB(Sequence-Hete_1,2,3)      | /agent_id/nink_linktrack_nodeframe2 | std_msgs/Float64MultiArray |
+| LiDAR(Sequence-Hete_1,2,3)    | /agent_id/scan|  livox_ros_driver/CustomMsg |
+| IMU(Sequence-Hete_1,2,3)      | /agent_id/mavros/imu/data  /agent_id/imu/data | sensor_msgs/Imu |
+
+The detailed breakdown of the individual data fields contained within the Ultra-Wideband (UWB) dataset please refer to [S3E](https://pengyu-team.github.io/S3E).
 
 This project provides partial experimental data (in ROS bag format) for obtaining the experimental results in the paper.  
 
