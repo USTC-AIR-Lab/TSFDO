@@ -91,6 +91,12 @@ These sequences obtained by ground robot are employed to compare the performance
 
 ### 1.5 Dataset Format
 
+Our research utilizes the ROS bag format for sensor data storage, a standard in robotics known for efficient data management and playback.Data from the same operational sequence are merged into one ROS bag file.
+
+**Data Organization**: Our dataset is meticulously organized with a clear directory structure. Calibration parameters are detailed in YAML file. Each data sequence is complete with a .bag file for primary sensor measurements. Additionally, to aid in thorough performance assessments, we’ve included auxiliary files like <agent_id>.tum, which contain ground truth data.
+
+**Ground Truth Format**: The ground truth data, which is essential for evaluating the accuracy of C-SLAM algorithms, is provided as TXT files. These files contain timestamped poses in UTM coordinates and orientation quaternions, formatted as follows: [timestamp, tx, ty, tz, qx, qy, qz, qw].
+
 **Information of ROS topics included in our datasets.** Agent_id stands for (uav0,uav1,uav4,uav5) or (Alpha,Bob,Carol) or (iris_0,iris_1,iris_2,iris_3).
 | Sensor | Topic | Type |
 |:--------:|:------:|:------:|
