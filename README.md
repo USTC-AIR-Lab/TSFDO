@@ -117,7 +117,7 @@ The detailed breakdown of the individual data fields contained within the Ultra-
 This project provides partial experimental data (in ROS bag format) for obtaining the experimental results in the paper.  
 
 - [Rosbag](https://huggingface.co/datasets/WenZhong1024/USTC-AIS-Lab_TSFDO/tree/main)  
-<!-- [Alternative link (Baidu Netdisk)](https://pan.baidu.com/s/xxxx) Extraction code: `****`  -->
+- [Alternative link](https://pan.baidu.com/s/1LiQXvI2Qkc5VXlA5uhnezg?pwd=e3j6) Extraction code: `e3j6`
 
 > ⚠️ Note: Please cite this paper when using the dataset and comply with the open-source license.
 
