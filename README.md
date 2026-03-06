@@ -230,5 +230,5 @@ If this repository and dataset are helpful for your research, please cite our pa
 
 This project would not have been possible without the following resources and support:
 
-- Thanks to the [ROS](https://www.ros.org/) community and other open-source projects such as [S3E](https://pengyu-team.github.io/S3E), [CoLRIO](https://github.com/PengYu-team/Co-LRIO), [DiSCo-SLAM](https://github.com/RobustFieldAutonomyLab/DiSCo-SLAM) [S-FAST-LIO](https://github.com/zlwang7/S-FAST_LIO) for providing tools and frameworks.  
+- Thanks to the [ROS](https://www.ros.org/) community and other open-source projects such as [S3E](https://pengyu-team.github.io/S3E), [CoLRIO](https://github.com/PengYu-team/Co-LRIO), [DiSCo-SLAM](https://github.com/RobustFieldAutonomyLab/DiSCo-SLAM), [Swarm-LIO2](https://github.com/hku-mars/Swarm-LIO2), [S-FAST-LIO](https://github.com/zlwang7/S-FAST_LIO) for providing tools and frameworks.  
 - Thanks to all team members for their collaboration during the experiments.   
