@@ -1,6 +1,6 @@
 # TSFDO
 
-**TSFDO** (Two-Stage Filter-Based Distributed Odometry) is a fully distributed odometry framework for multi-robot systems (MRSs), built upon the invariant extended Kalman filter. It tightly integrates LiDAR, IMU, and UWB measurements, enabling each robot in the system to estimate the global state rather than only a local subset of states through inter-robot communication and distributed information fusion.
+<!-- **TSFDO** (Two-Stage Filter-Based Distributed Odometry) is a fully distributed odometry framework for multi-robot systems (MRSs), built upon the invariant extended Kalman filter. It tightly integrates LiDAR, IMU, and UWB measurements, enabling each robot in the system to estimate the global state rather than only a local subset of states through inter-robot communication and distributed information fusion.
 
 ## Framework overview
 
@@ -14,11 +14,11 @@
 
 To evaluate the performance and advantages of this distributed odometry framework, we conduct a series of experiments using both a public dataset, S3E and data collected by ourselves. 
 
-<!--📄 Related paper is available on arxiv: [TSFDO](https://arxiv.org/abs/xxxx). -->
+📄 Related paper is available on arxiv: [TSFDO](https://arxiv.org/abs/xxxx).
 
----
+-->
 
-## 1. Custom dataset
+## 1. Custom data
 ### 1.1 Sensor Configuration
 
 <p align="center">
@@ -50,11 +50,13 @@ Four self-made UAVs and a ground mobile robot is utilized for data collection.
 
 ### 1.2 Sensor Synchronization
 #### 1.2.1 Time synchronization
-**Time synchronization across all sensors**： Time synchronization is not considered in this work due to the heterogeneity of the dataset and compatibility limitations among the evaluated algorithms.
+**Time synchronization across all sensors**： Time synchronization is not considered in this work due to the heterogeneous nature of the dataset and compatibility limitations among the evaluated algorithms. Specifically, the proposed system follows a tightly-coupled LiDAR–IMU odometry framework, where high-rate IMU measurements are used for continuous state propagation and LiDAR motion compensation, thus reducing the dependency on strict hardware-level synchronization. Besides, Livox Mid360 provides time-synchronized imu data.
+
+Furthermore, the UWB sensor operates at a relatively high frequency, providing dense range measurements over time. Although these measurements are not strictly synchronized with the LiDAR and IMU due to independent sensor clocks, the high update rate enables effective temporal alignment through interpolation and state propagation within the estimation framework.
 
 **Time synchronization across agents**: In outdoor settings with access to Global Navigation Satellite System (GNSS) signals, we use GNSS time as the global reference to synchronize the timing across agents after the collection.
 #### 1.2.2 Sensor calibration
-The LiDAR–IMU extrinsic parameters are treated as known constants. The lever-arm compensation of the UWB sensor is omitted, since ablation studies indicate that its influence on the overall estimation accuracy is negligible.
+The LiDAR–IMU extrinsic parameters are treated as known constants, which are detailed in the YAML file of custom data used in our experiments. The lever-arm compensation of the UWB sensor is omitted, since ablation studies indicate that its influence on the overall estimation accuracy is negligible.
 ### 1.3 Ground Truth
 For outdoor environments with good GNSS signal reception, a dual-antenna RTK device(Beitian BG-620 GNSS Receiver) is used to achieve highly accurate localization data with centimeter-level precision.
 
@@ -69,11 +71,11 @@ For simulated datasets, we obtain the ground truth from gazebo topic /gazebo/mod
   <em>figure4.  Trajectories of the ground robot when collecting sequences: Sequence-GR_1 (blue), Sequence-GR_2 (yellow), and Sequence-GR_3 (red)</em>
 </p>
 
-Four UAVs form a multi-robot system for data collection. For the ground robot dataset, data are collected by a single robot. 
+Four UAVs form a multi-robot system for data collection.
 
-Specifically, the data obtained from three different trajectories, containing IMU and LiDAR measurements, are merged into one multi-robot sequence, which is treated as data from a system of three robots as shown in the above figure. Using the ground truth obtained via GNSS, the relative distances among the robots are computed and used as UWB measurements. In this way, a multi-robot dataset containing IMU, LiDAR, and UWB information is constructed. 
+For the ground robot sequence, data are collected by a single robot. Specifically, the data obtained from three different trajectories, containing IMU and LiDAR measurements, are merged into one multi-robot sequence, which is treated as data from a system of three robots as shown in the above figure. Using the ground truth obtained via GNSS, the relative distances among the robots are computed and used as UWB measurements. In this way, a multi-robot dataset containing IMU, LiDAR, and UWB information is constructed. 
 
-These sequences obtained by ground robot are employed to compare the performance of our method with existing cooperative odometry approaches in scenarios where robot trajectories within a multi-robot system do not intersect except for the start point. The choice of the ground robot is motivated by its LiDAR type, since the existing methods in comparison are compatible only with Velodyne LiDAR, whereas our UAVs are equipped with Livox Mid-360 LiDAR.
+The heterogeneous sequences generated in the Gazebo simulation are collected using a team of four robots: two UAVs (robots 1 and 2) and two ground robots (robots 3 and 4). Sequence-Here 3 contains the longest trajectories among all sequences used in our experiments.
 
 **Analysis of our datasets**
 | Sequence | Time[s] | Ground Truth | Length[m] | Size | Sensors|
@@ -85,9 +87,9 @@ These sequences obtained by ground robot are employed to compare the performance
 | Sequence-GR_1   | 406 | RTK | Alpha:248 Bob:229 Carol:178 | 5.1GB |IMU LiDAR RTK|
 | Sequence-GR_2   | 436 | RTK | Alpha:226 Bob:199 Carol:240 | 5.3GB |IMU LiDAR RTK|
 | Sequence-GR_3   | 692 | RTK | Alpha:420 Bob:424 Carol:443 | 9.7GB |IMU LiDAR RTK|
-| Sequence-Hete_1 | 72  | /gazebo/model_states | iris_0:304 iris_1:252 iris_2:189 iris_3:230   | 522MB |simulated IMU LiDAR|
-| Sequence-Hete_2 | 79  | /gazebo/model_states | iris_0:394 iris_1:361 iris_2:188 iris_3:229   | 582MB |simulated IMU LiDAR|
-| Sequence-Hete_3 | 205 | /gazebo/model_states | iris_0:1616 iris_1:1174 iris_2:492 iris_3:500 | 1.5GB |simulated IMU LiDAR|
+| Sequence-Hete_1 | 72  | /gazebo/model_states | iris_0:304 iris_1:252 iris_2:189 iris_3:230   | 522MB |simulated IMU LiDAR UWB|
+| Sequence-Hete_2 | 79  | /gazebo/model_states | iris_0:394 iris_1:361 iris_2:188 iris_3:229   | 582MB |simulated IMU LiDAR UWB|
+| Sequence-Hete_3 | 205 | /gazebo/model_states | iris_0:1616 iris_1:1174 iris_2:492 iris_3:500 | 1.5GB |simulated IMU LiDAR UWB|
 
 ### 1.5 Dataset Format
 
@@ -95,31 +97,42 @@ Our research utilizes the ROS bag format for sensor data storage, a standard in 
 
 **Data Organization**: Our dataset is meticulously organized with a clear directory structure. Calibration parameters are detailed in YAML file. Each data sequence is complete with a .bag file for primary sensor measurements. Additionally, to aid in thorough performance assessments, we’ve included auxiliary files like <agent_id>.tum, which contain ground truth data.
 
-**Ground Truth Format**: The ground truth data, which is essential for evaluating the accuracy of C-SLAM algorithms, is provided as TXT files. These files contain timestamped poses in UTM coordinates and orientation quaternions, formatted as follows: [timestamp, tx, ty, tz, qx, qy, qz, qw].
+**Ground Truth Format**: The ground truth data, which is essential for evaluating the accuracy of Collaborative SLAM algorithms, is provided as TXT files. These files contain timestamped poses in UTM coordinates and orientation quaternions, formatted as follows: [timestamp, tx, ty, tz, qx, qy, qz, qw].
 
-**Information of ROS topics included in our datasets.** Agent_id stands for (uav0,uav1,uav4,uav5) or (Alpha,Bob,Carol) or (iris_0,iris_1,iris_2,iris_3).
+**Information of ROS topics included in our datasets.** 
 | Sensor | Topic | Type |
 |:--------:|:------:|:------:|
 | LiDAR(Sequence-UAV_1,2,3,4)  | /agent_id/livox/lidar |  livox_ros_driver2/CustomMsg  |
 | IMU(Sequence-UAV_1,2,3,4)    | /agent_id/livox/imu   |  sensor_msgs/Imu  |
-| UWB(Sequence-UAV_1,2,3,4)    | /agent_id/nink_linktrack_nodeframe2 |  nlink_parser/LinktrackNodeframe2  |
+| UWB(Sequence-UAV_1,2,3,4)    | /agent_id/nlink_linktrack_nodeframe2 |  nlink_parser/LinktrackNodeframe2  |
 | RTK(Sequence-UAV_1,2,3,4)    | /agent_id/global_position/raw/fix |  sensor_msgs/NavSatFix  |
 | LiDAR(Sequence-GR_1,2,3)     | /agent_id/velodyne_points | sensor_msgs/PointCloud2 |
 | IMU(Sequence-GR_1,2,3)       | /agent_id/imu/data |  sensor_msgs/Imu  |
 | RTK(Sequence-GR_1,2,3)       | /agent_id/fix |  sensor_msgs/NavSatFix  |
-| simulated UWB(Sequence-GR_1,2,3)       | /agent_id/nink_linktrack_nodeframe2 | std_msgs/Float32MultiArray  |
-| simulated UWB(Sequence-Hete_1,2,3)      | /agent_id/nink_linktrack_nodeframe2 | std_msgs/Float64MultiArray |
+| simulated UWB(Sequence-GR_1,2,3)       | /agent_id/nlink_linktrack_nodeframe2 | std_msgs/Float32MultiArray  |
+| simulated UWB(Sequence-Hete_1,2,3)      | /agent_id/nlink_linktrack_nodeframe2 | std_msgs/Float64MultiArray |
 | LiDAR(Sequence-Hete_1,2,3)    | /agent_id/scan|  livox_ros_driver/CustomMsg |
 | IMU(Sequence-Hete_1,2,3)      | /agent_id/mavros/imu/data  /agent_id/imu/data | sensor_msgs/Imu |
 
+Agent_id stands for (uav0,uav1,uav4,uav5) or (Alpha,Bob,Carol) or (iris_0,iris_1,iris_2,iris_3).
 The detailed breakdown of the individual data fields contained within the Ultra-Wideband (UWB) dataset please refer to [S3E](https://pengyu-team.github.io/S3E).
 
 This project provides partial experimental data (in ROS bag format) for obtaining the experimental results in the paper.  
 
 - [Rosbag](https://huggingface.co/datasets/Test20261024/TSFDO_Dataset/tree/main)
+
+For the heterogeneous sequences, please refer to the alternative link below. 
 - [Alternative link](https://pan.baidu.com/s/1LiQXvI2Qkc5VXlA5uhnezg?pwd=e3j6) Extraction code: `e3j6`
 
-> ⚠️ Note: Please cite this paper when using the dataset and comply with the open-source license.
+### 1.6 Global Extrinsic Transformations
+
+ScanContext, a lightweight spatial feature descriptor for 3D LiDAR, is used to describe and match features. 
+
+Then, mobile robots exchange scan context features and perform scan matching. Once a potential inter-robot loop closure candidate is detected, incremental pairwise consistent measurement set maximization (PCM) is performed to remove outliers. A two-stage optimization is performed by each robot, first establishing a global-to-local coordinate transformation. 
+
+Finally, coordinate transformations are exchanged among robots to build the observation model.
+
+<!-- > ⚠️ Note: Please cite this paper when using the dataset and comply with the open-source license.
 
 ---
 
@@ -231,4 +244,4 @@ If this repository and dataset are helpful for your research, please cite our pa
 This project would not have been possible without the following resources and support:
 
 - Thanks to the [ROS](https://www.ros.org/) community and other open-source projects such as [S3E](https://pengyu-team.github.io/S3E), [CoLRIO](https://github.com/PengYu-team/Co-LRIO), [DiSCo-SLAM](https://github.com/RobustFieldAutonomyLab/DiSCo-SLAM), [Swarm-LIO2](https://github.com/hku-mars/Swarm-LIO2), [S-FAST-LIO](https://github.com/zlwang7/S-FAST_LIO) for providing tools and frameworks.  
-- Thanks to all team members for their collaboration during the experiments.   
+- Thanks to all team members for their collaboration during the experiments.   -->
