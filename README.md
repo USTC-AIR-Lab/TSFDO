@@ -121,8 +121,8 @@ This project provides partial experimental data (in ROS bag format) for obtainin
 
 - [Rosbag](https://huggingface.co/datasets/Test20261024/TSFDO_Dataset/tree/main)
 
-For the ground robot sequences, please refer to the alternative link below. 
-- [Alternative link](https://pan.baidu.com/s/1LiQXvI2Qkc5VXlA5uhnezg?pwd=e3j6) Extraction code: `e3j6`
+<!-- For the ground robot sequences, please refer to the alternative link below. 
+- [Alternative link](https://pan.baidu.com/s/1LiQXvI2Qkc5VXlA5uhnezg?pwd=e3j6) Extraction code: `e3j6` -->
 
 ### 1.6 Global Extrinsic Transformations
 
