@@ -22,18 +22,18 @@ To evaluate the performance and advantages of this distributed odometry framewor
 ### 1.1 Sensor Configuration
 
 <p align="center">
-  <img src="figures/figure2.png" alt="figure2" width="500"/>
+  <img src="figures/figure2.png" alt="figure1" width="500"/>
 </p>
 
 <p align="center">
-  <em>figure2.  UAVs used for recording the dataset</em>
+  <em>figure1.  UAVs used for recording the dataset</em>
 
 <p align="center">
-  <img src="figures/figure3.png" alt="figure3" width="500"/>
+  <img src="figures/figure3.png" alt="figure2" width="500"/>
 </p>
 
 <p align="center">
-  <em>figure3.  Details about the UAV and the ground vehicle</em>
+  <em>figure2.  Details about the UAV and the ground vehicle</em>
 
 Four self-made UAVs and a ground mobile robot is utilized for data collection.
 
@@ -64,11 +64,11 @@ For simulated datasets, we obtain the ground truth from gazebo topic /gazebo/mod
 ### 1.4 Dataset Analysis
 
 <p align="center">
-  <img src="figures/figure4.png" alt="figure4" width="600"/>
+  <img src="figures/figure4.png" alt="figure3" width="600"/>
 </p>
 
 <p align="center">
-  <em>figure4.  Trajectories of the ground robot when collecting sequences: Sequence-GR_1 (blue), Sequence-GR_2 (yellow), and Sequence-GR_3 (red)</em>
+  <em>figure3.  Trajectories of the ground robot when collecting sequences: Sequence-GR_1 (blue), Sequence-GR_2 (yellow), and Sequence-GR_3 (red)</em>
 </p>
 
 Four UAVs form a multi-robot system for data collection.
